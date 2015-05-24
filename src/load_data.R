@@ -38,7 +38,7 @@ opportunities$Created.Date <- as.Date(opportunities$Created.Date, format = "%m/%
 opportunities$Publish.Date <- as.Date(opportunities$Publish.Date, format = "%m/%d/%y")
 ops_applied_for$Application_Date <- as.Date(ops_applied_for$Application_Date, format = "%m/%d/%Y")
 placements$Placement_Date <- as.Date(placements$Placement_Date, format = "%d/%m/%Y")
-placements$Job_Offer_Date <- as.Date(placements$Job_Offer_Date, format = "%d/%m/%Y")
+placements$Opportunity_Offer_Date <- as.Date(placements$Opportunity_Offer_Date, format = "%d/%m/%Y")
 
 # create new fields for day, month and year
 opportunities$Created.Date.Day   <- as.factor(format(opportunities$Created.Date, format = "%d"))
@@ -56,9 +56,9 @@ placements$Placement_Date_Day   <- as.factor(format(placements$Placement_Date, f
 placements$Placement_Date_Month <- as.factor(format(placements$Placement_Date, format = "%m"))
 placements$Placement_Date_Year  <- as.factor(format(placements$Placement_Date, format = "%Y"))
 
-placements$Job_Offer_Date_Day   <- as.factor(format(placements$Job_Offer_Date, format = "%d"))
-placements$Job_Offer_Date_Month <- as.factor(format(placements$Job_Offer_Date, format = "%m"))
-placements$Job_Offer_Date_Year  <- as.factor(format(placements$Job_Offer_Date, format = "%Y"))
+placements$Opportunity_Offer_Date_Day   <- as.factor(format(placements$Opportunity_Offer_Date, format = "%d"))
+placements$Opportunity_Offer_Date_Month <- as.factor(format(placements$Opportunity_Offer_Date, format = "%m"))
+placements$Opportunity_Offer_Date_Year  <- as.factor(format(placements$Opportunity_Offer_Date, format = "%Y"))
 
 # cleanup some categories
 levels(org$Num_Employees)[1] <- "N/A"
