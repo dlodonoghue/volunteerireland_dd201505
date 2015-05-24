@@ -1,7 +1,6 @@
-setwd("~/Dropbox/Projects/R/volunteerireland_dd201505/src")
 
 volunteers      <- read.csv("../data/df_vol.csv")
-opputunities    <- read.csv("../data/df_oppsaltm.csv")
+opportunities    <- read.csv("../data/df_oppsaltm.csv")
 placements      <- read.csv("../data/df_plc.csv")
 org             <- read.csv("../data/df_orgs.csv", sep='\t')
 ops_applied_for <- read.csv("../data/df_oppsapfr.csv")
@@ -15,39 +14,39 @@ colnames(org)[13] <- "Num_Volunteers"
 colnames(org)[14] <- "Num_Employees"
 colnames(org)[15] <- "Management_Style"
 
-colnames(opputunities)[2] <- "Job_ID"
-colnames(opputunities)[5] <- "Role_Name"
+colnames(opportunities)[2] <- "Opportunity_ID"
+colnames(opportunities)[5] <- "Role_Name"
 
 colnames(ops_applied_for)[1] <- "Application_Name"
 colnames(ops_applied_for)[3] <- "Application_Date"
 colnames(ops_applied_for)[4] <- "Volunteer_ID"
 colnames(ops_applied_for)[5] <- "Application_ID"
-colnames(ops_applied_for)[6] <- "Job_ID"
+colnames(ops_applied_for)[6] <- "Opportunity_ID"
 colnames(ops_applied_for)[7] <- "Role_Wanted"
 
 colnames(placements)[2]  <- "Volunteer_ID"
 colnames(placements)[3]  <- "Placement_ID"
 colnames(placements)[4]  <- "Placement_Date"
-colnames(placements)[5]  <- "Job_Offer_Date"
-colnames(placements)[6]  <- "Job_ID"
-colnames(placements)[10] <- "Job_Volunteer_Centre"
-colnames(placements)[11] <- "Job_Description"
+colnames(placements)[5]  <- "Opportunity_Offer_Date"
+colnames(placements)[6]  <- "Opportunity_ID"
+colnames(placements)[10] <- "Opportunity_Volunteer_Centre"
+colnames(placements)[11] <- "Opportunity_Description"
 
 # convert columns to their appropriate types
 volunteers$Registration_Date <- as.Date(volunteers$Registration_Date, format = "%d/%m/%Y")
-opputunities$Created.Date <- as.Date(opputunities$Created.Date, format = "%m/%d/%y")
-opputunities$Publish.Date <- as.Date(opputunities$Publish.Date, format = "%m/%d/%y")
+opportunities$Created.Date <- as.Date(opportunities$Created.Date, format = "%m/%d/%y")
+opportunities$Publish.Date <- as.Date(opportunities$Publish.Date, format = "%m/%d/%y")
 ops_applied_for$Application_Date <- as.Date(ops_applied_for$Application_Date, format = "%m/%d/%Y")
 placements$Placement_Date <- as.Date(placements$Placement_Date, format = "%d/%m/%Y")
 placements$Job_Offer_Date <- as.Date(placements$Job_Offer_Date, format = "%d/%m/%Y")
 
 # create new fields for day, month and year
-opputunities$Created.Date.Day   <- as.factor(format(opputunities$Created.Date, format = "%d"))
-opputunities$Created.Date.Month <- as.factor(format(opputunities$Created.Date, format = "%m"))
-opputunities$Created.Date.Year  <- as.factor(format(opputunities$Created.Date, format = "%Y"))
-opputunities$Publish.Date.Day   <- as.factor(format(opputunities$Publish.Date, format = "%d"))
-opputunities$Publish.Date.Month <- as.factor(format(opputunities$Publish.Date, format = "%m"))
-opputunities$Publish.Date.Year  <- as.factor(format(opputunities$Publish.Date, format = "%Y"))
+opportunities$Created.Date.Day   <- as.factor(format(opportunities$Created.Date, format = "%d"))
+opportunities$Created.Date.Month <- as.factor(format(opportunities$Created.Date, format = "%m"))
+opportunities$Created.Date.Year  <- as.factor(format(opportunities$Created.Date, format = "%Y"))
+opportunities$Publish.Date.Day   <- as.factor(format(opportunities$Publish.Date, format = "%d"))
+opportunities$Publish.Date.Month <- as.factor(format(opportunities$Publish.Date, format = "%m"))
+opportunities$Publish.Date.Year  <- as.factor(format(opportunities$Publish.Date, format = "%Y"))
 
 ops_applied_for$Application_Date_Day   <- as.factor(format(ops_applied_for$Application_Date, format = "%d"))
 ops_applied_for$Application_Date_Month <- as.factor(format(ops_applied_for$Application_Date, format = "%m"))
@@ -76,14 +75,14 @@ levels(org$Num_Employees)[8] <- "0"
 # thus, publish contains the most up-to-date date, so let's set any publish date
 # that's empty (i.e. == NA) to the creation date, so that later on we only work with
 # publish date in the stats.
-opputunities$Publish.Date.Year <- as.character(opputunities$Publish.Date.Year)
-opputunities$Publish.Date.Year[is.na(opputunities$Publish.Date.Year)] <- as.character(opputunities$Created.Date.Year[is.na(opputunities$Publish.Date.Year)])
-opputunities$Publish.Date.Year <- as.factor(opputunities$Publish.Date.Year)
+opportunities$Publish.Date.Year <- as.character(opportunities$Publish.Date.Year)
+opportunities$Publish.Date.Year[is.na(opportunities$Publish.Date.Year)] <- as.character(opportunities$Created.Date.Year[is.na(opportunities$Publish.Date.Year)])
+opportunities$Publish.Date.Year <- as.factor(opportunities$Publish.Date.Year)
 
-opputunities$Publish.Date.Month <- as.character(opputunities$Publish.Date.Month)
-opputunities$Publish.Date.Month[is.na(opputunities$Publish.Date.Month)] <- as.character(opputunities$Created.Date.Month[is.na(opputunities$Publish.Date.Month)])
-opputunities$Publish.Date.Month <- as.factor(opputunities$Publish.Date.Month)
+opportunities$Publish.Date.Month <- as.character(opportunities$Publish.Date.Month)
+opportunities$Publish.Date.Month[is.na(opportunities$Publish.Date.Month)] <- as.character(opportunities$Created.Date.Month[is.na(opportunities$Publish.Date.Month)])
+opportunities$Publish.Date.Month <- as.factor(opportunities$Publish.Date.Month)
 
-opputunities$Publish.Date.Day <- as.character(opputunities$Publish.Date.Day)
-opputunities$Publish.Date.Day[is.na(opputunities$Publish.Date.Day)] <- as.character(opputunities$Created.Date.Day[is.na(opputunities$Publish.Date.Day)])
-opputunities$Publish.Date.Day <- as.factor(opputunities$Publish.Date.Day)
+opportunities$Publish.Date.Day <- as.character(opportunities$Publish.Date.Day)
+opportunities$Publish.Date.Day[is.na(opportunities$Publish.Date.Day)] <- as.character(opportunities$Created.Date.Day[is.na(opportunities$Publish.Date.Day)])
+opportunities$Publish.Date.Day <- as.factor(opportunities$Publish.Date.Day)
