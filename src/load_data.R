@@ -3,7 +3,7 @@ volunteers      <- read.csv("../data/df_vol.csv")
 opportunities    <- read.csv("../data/df_oppsaltm.csv")
 placements      <- read.csv("../data/df_plc.csv")
 org             <- read.csv("../data/df_orgs.csv", sep='\t')
-ops_applied_for <- read.csv("../data/df_oppsapfr.csv")
+opps_applied_for <- read.csv("../data/df_oppsapfr.csv")
 
 # rename the common columns between the data frames and some others
 colnames(volunteers)[1]  <- "Volunteer_ID"
@@ -17,12 +17,12 @@ colnames(org)[15] <- "Management_Style"
 colnames(opportunities)[2] <- "Opportunity_ID"
 colnames(opportunities)[5] <- "Role_Name"
 
-colnames(ops_applied_for)[1] <- "Application_Name"
-colnames(ops_applied_for)[3] <- "Application_Date"
-colnames(ops_applied_for)[4] <- "Volunteer_ID"
-colnames(ops_applied_for)[5] <- "Application_ID"
-colnames(ops_applied_for)[6] <- "Opportunity_ID"
-colnames(ops_applied_for)[7] <- "Role_Wanted"
+colnames(opps_applied_for)[1] <- "Application_Name"
+colnames(opps_applied_for)[3] <- "Application_Date"
+colnames(opps_applied_for)[4] <- "Volunteer_ID"
+colnames(opps_applied_for)[5] <- "Application_ID"
+colnames(opps_applied_for)[6] <- "Opportunity_ID"
+colnames(opps_applied_for)[7] <- "Role_Wanted"
 
 colnames(placements)[2]  <- "Volunteer_ID"
 colnames(placements)[3]  <- "Placement_ID"
@@ -36,7 +36,7 @@ colnames(placements)[11] <- "Opportunity_Description"
 volunteers$Registration_Date <- as.Date(volunteers$Registration_Date, format = "%d/%m/%Y")
 opportunities$Created.Date <- as.Date(opportunities$Created.Date, format = "%m/%d/%y")
 opportunities$Publish.Date <- as.Date(opportunities$Publish.Date, format = "%m/%d/%y")
-ops_applied_for$Application_Date <- as.Date(ops_applied_for$Application_Date, format = "%m/%d/%Y")
+opps_applied_for$Application_Date <- as.Date(opps_applied_for$Application_Date, format = "%m/%d/%Y")
 placements$Placement_Date <- as.Date(placements$Placement_Date, format = "%d/%m/%Y")
 placements$Opportunity_Offer_Date <- as.Date(placements$Opportunity_Offer_Date, format = "%d/%m/%Y")
 
@@ -48,9 +48,9 @@ opportunities$Publish.Date.Day   <- as.factor(format(opportunities$Publish.Date,
 opportunities$Publish.Date.Month <- as.factor(format(opportunities$Publish.Date, format = "%m"))
 opportunities$Publish.Date.Year  <- as.factor(format(opportunities$Publish.Date, format = "%Y"))
 
-ops_applied_for$Application_Date_Day   <- as.factor(format(ops_applied_for$Application_Date, format = "%d"))
-ops_applied_for$Application_Date_Month <- as.factor(format(ops_applied_for$Application_Date, format = "%m"))
-ops_applied_for$Application_Date_year  <- as.factor(format(ops_applied_for$Application_Date, format = "%Y"))
+opps_applied_for$Application_Date_Day   <- as.factor(format(opps_applied_for$Application_Date, format = "%d"))
+opps_applied_for$Application_Date_Month <- as.factor(format(opps_applied_for$Application_Date, format = "%m"))
+opps_applied_for$Application_Date_year  <- as.factor(format(opps_applied_for$Application_Date, format = "%Y"))
 
 placements$Placement_Date_Day   <- as.factor(format(placements$Placement_Date, format = "%d"))
 placements$Placement_Date_Month <- as.factor(format(placements$Placement_Date, format = "%m"))
