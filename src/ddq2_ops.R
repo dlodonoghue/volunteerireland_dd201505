@@ -6,6 +6,8 @@ if (!("opportunities" %in% ls()) |
       source("load_data.R")      
 }
 
+library(dplyr)
+
 opps_and_orgs <- merge(x = opportunities, y = org, by = "Organisation.ID", all.x = TRUE)
 
 # split by Year published and cause
