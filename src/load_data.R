@@ -50,7 +50,7 @@ opportunities$Publish.Date.Year  <- as.factor(format(opportunities$Publish.Date,
 
 opps_applied_for$Application_Date_Day   <- as.factor(format(opps_applied_for$Application_Date, format = "%d"))
 opps_applied_for$Application_Date_Month <- as.factor(format(opps_applied_for$Application_Date, format = "%m"))
-opps_applied_for$Application_Date_year  <- as.factor(format(opps_applied_for$Application_Date, format = "%Y"))
+opps_applied_for$Application_Date_Year  <- as.factor(format(opps_applied_for$Application_Date, format = "%Y"))
 
 placements$Placement_Date_Day   <- as.factor(format(placements$Placement_Date, format = "%d"))
 placements$Placement_Date_Month <- as.factor(format(placements$Placement_Date, format = "%m"))
