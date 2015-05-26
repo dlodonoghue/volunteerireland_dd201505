@@ -19,7 +19,7 @@ library(dplyr)
 placements_and_vols <- merge(x = placements, y = volunteers,
                              by = "Volunteer_ID", all.x = TRUE)
 
-# total volunteers placed by Gender in 2014 -----------------------------------
+# total volunteers placed by Gender and Year ----------------------------------
 placements_by_gender    <- placements_and_vols %>%
                     group_by(Placement_Date_Year, Gender) %>%
                     summarise(Num_placements = n_distinct(Volunteer_ID)) %>%
@@ -27,7 +27,7 @@ placements_by_gender    <- placements_and_vols %>%
 
 View(placements_by_gender)
 
-# sanity check
+# sanity check; is total volunteers placed in 2014 equal to 4555? -------------
 df <- placements_by_gender[placements_by_gender$Placement_Date_Year == "2014",]
 ifelse(sum(df$Num_placements) == 4555,
        "correct total volunteers placed in 2014",
