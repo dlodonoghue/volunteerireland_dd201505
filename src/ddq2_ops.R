@@ -1,8 +1,8 @@
 if (!("opportunities" %in% ls()) |
-    !("opps_applied_for" %in% ls() |
-    !("placements" %in% ls() |
-    !("volunteers" %in% ls() |
-    !("org" %in% ls()) {
+    !("opps_applied_for" %in% ls()) |
+    !("placements" %in% ls()) |
+    !("volunteers" %in% ls()) |
+    !("org" %in% ls())) {
       source("load_data.R")      
 }
 
