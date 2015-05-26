@@ -1,9 +1,9 @@
 
-volunteers      <- read.csv("../data/df_vol.csv")
-opportunities    <- read.csv("../data/df_oppsaltm.csv")
-placements      <- read.csv("../data/df_plc.csv")
-org             <- read.csv("../data/df_orgs.csv", sep='\t')
-opps_applied_for <- read.csv("../data/df_oppsapfr.csv")
+volunteers      <- read.csv("../data/df_vol.csv", na.strings="")
+opportunities    <- read.csv("../data/df_oppsaltm.csv", na.strings="")
+placements      <- read.csv("../data/df_plc.csv", na.strings="")
+org             <- read.csv("../data/df_orgs.csv", sep='\t', na.strings="")
+opps_applied_for <- read.csv("../data/df_oppsapfr.csv", na.strings="")
 
 # rename the common columns between the data frames and some others
 colnames(volunteers)[1]  <- "Volunteer_ID"
