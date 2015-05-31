@@ -36,6 +36,7 @@ colnames(placements)[11] <- "Opportunity_Description"
 volunteers$Registration_Date <- as.Date(volunteers$Registration_Date, format = "%d/%m/%Y")
 opportunities$Created.Date <- as.Date(opportunities$Created.Date, format = "%m/%d/%y")
 opportunities$Publish.Date <- as.Date(opportunities$Publish.Date, format = "%m/%d/%y")
+opportunities$Publish.Direct.Contact. <- as.factor(opportunities$Publish.Direct.Contact.)
 opps_applied_for$Application_Date <- as.Date(opps_applied_for$Application_Date, format = "%m/%d/%Y")
 placements$Placement_Date <- as.Date(placements$Placement_Date, format = "%d/%m/%Y")
 placements$Opportunity_Offer_Date <- as.Date(placements$Opportunity_Offer_Date, format = "%d/%m/%Y")
