@@ -1,0 +1,37 @@
+# Count Opps Records, and Sum of Volunteers Reqd, for 2014, by Local Council (vr <21)
+
+if (!("opportunities" %in% ls()) |
+      !("opps_applied_for" %in% ls()) |
+      !("placements" %in% ls()) |
+      !("volunteers" %in% ls()) |
+      !("org" %in% ls())) {
+  source("load_data.R")      
+}
+
+library(dplyr)
+
+# by county
+summary_per_year_per_county <- opportunities %>%
+  filter(Publish.Date.Year == "2014" &
+           Number.of.Volunteers.Required < 21 &
+           !is.na(Publish.Date.Year) &
+           !is.na(Number.of.Volunteers.Required)) %>%
+  group_by(Publish.Date.Year, County) %>%
+  summarise(Number_of_volunteers_required = sum(Number.of.Volunteers.Required)) %>%
+  ungroup()
+
+# by bureau
+summary_per_year_per_bureau <- opportunities %>%
+  filter(Publish.Date.Year == "2014" &
+           Number.of.Volunteers.Required < 21 &
+           !is.na(Publish.Date.Year) &
+           !is.na(Number.of.Volunteers.Required)) %>%
+  group_by(Publish.Date.Year, Volunteer.Bureau) %>%
+  summarise(Number_of_volunteers_required = sum(Number.of.Volunteers.Required)) %>%
+  ungroup()
+
+print(summary_per_year_per_county)
+print(summary_per_year_per_bureau)
+
+rm(summary_per_year_per_county)
+rm(summary_per_year_per_bureau)
