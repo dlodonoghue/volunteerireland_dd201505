@@ -17,15 +17,21 @@ if (!("opportunities" %in% ls()) |
 library(dplyr)
 
 # match organisation info to opportunities table via "Organisation_ID" --------
-opps_and_orgs <- merge(x = opportunities, y = org, by = "Organisation.ID",
-                       all.x = TRUE)
+opps_and_orgs <-
+    merge(x = opportunities[, c("Organisation.ID", "Opportunity_ID")],
+          y = org[, c("Organisation.ID", "Volunteer.Bureau")],
+          by = "Organisation.ID", all.x = TRUE)
 
-# match org / opp info to applications table via "Opportunity_ID" ---------------
+# match org / opp info to applications table via "Opportunity_ID" -------------
 applications_opps_and_orgs <- merge(x = opps_applied_for, y = opps_and_orgs,
                                   by = "Opportunity_ID", all.x = TRUE)
 
 # total number of unique vols applying, by Volunteer Bureau and Year ----------
 vols_applied_by_bureau <- applications_opps_and_orgs %>%
-                group_by(Application_Date_Year, Volunteer.Bureau.x) %>%
-                summarise(Num_vols_applied = n_distinct(Volunteer_ID)) %>%
-                ungroup()  
+    filter(Application_Date_Year == "2014") %>%
+    group_by(Volunteer.Bureau) %>%
+    summarise(Num_apps = n_distinct(Application_ID),
+              Num_vols_applied = n_distinct(Volunteer_ID)) %>%
+    ungroup() 
+
+View(vols_applied_by_bureau)
