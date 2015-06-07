@@ -11,7 +11,7 @@ if (!("opportunities" %in% ls()) |
     !("org" %in% ls())) {
     source("load_data.R")      
 }
-
+  
 #required library
 library(dplyr)
 
