@@ -28,6 +28,6 @@ vols_placed_by_eng_level_nationality <- placements_vols_opps %>%
               Num_opportunities = n_distinct(Opportunity_ID),
               Num_vols_placed = n_distinct(Volunteer_ID)) %>%
     ungroup()
-
+  
 View(vols_placed_by_eng_level_nationality)
 
