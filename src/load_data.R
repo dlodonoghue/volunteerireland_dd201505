@@ -62,14 +62,14 @@ placements$Opportunity_Offer_Date_Month <- as.factor(format(placements$Opportuni
 placements$Opportunity_Offer_Date_Year  <- as.factor(format(placements$Opportunity_Offer_Date, format = "%Y"))
 
 # cleanup some categories
-levels(org$Num_Employees)[1] <- "N/A"
-levels(org$Num_Employees)[2] <- "10-20"
-levels(org$Num_Employees)[3] <- "100+"
-levels(org$Num_Employees)[4] <- "20-50"
-levels(org$Num_Employees)[5] <- "5-10"
-levels(org$Num_Employees)[6] <- "50-100"
-levels(org$Num_Employees)[7] <- "1-4"
-levels(org$Num_Employees)[8] <- "0"
+#levels(org$Num_Employees)[1] <- "N/A"
+#levels(org$Num_Employees)[2] <- "10-20"
+#levels(org$Num_Employees)[3] <- "100+"
+#levels(org$Num_Employees)[4] <- "20-50"
+#levels(org$Num_Employees)[5] <- "5-10"
+#levels(org$Num_Employees)[6] <- "50-100"
+#levels(org$Num_Employees)[7] <- "1-4"
+#levels(org$Num_Employees)[8] <- "0"
 
 # in oppurtunities there are two dates: create and publish. The first is used first
 # when the record is first created. The second is used only if a job is reactivated.
