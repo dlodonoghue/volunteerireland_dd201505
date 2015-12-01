@@ -71,7 +71,7 @@ nosetests.xml
 ## R related ...........................
 .RData
 .Rhistory
-.Rproj
+*.Rproj
 
 ## misc ................................
 
