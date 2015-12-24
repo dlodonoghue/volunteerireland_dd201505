@@ -45,5 +45,14 @@ The scripts whose filename starts with "AP" output tables that make it easier to
 
 The scripts whose filename starts with "PL" output tables that make it easier to understand how many PLacements occurred (segmenting the volunteers by features) and how many placements were generated as a response to opportunities (segmenting the opportunties by their features). The PL scripts correspond to the AP scripts, the difference being that the former deal with placements (i.e. data on successful applications) and the latter deal with applications, regardless their success.
 
-Other scripts mainly provide data visualizations of the dataset (e.g. clustering of volunteering causes with respect to number of applications/placements, trends of placement ratio with respect to nationality), or computer totals of the overall applications/placements by year.
+#### Other scripts / useful examples of data visualizations
 
+Other scripts mainly provide data visualizations of the dataset or compute totals of the overall applications/placements by year.  
+Irish **geographical data** at a county level can be visualized using the stub provided in V_map.R, using data from gadm.org.  
+**Predictors of placements** could be analysed using machine learning techniques. An example using decision trees (rpart package) is provided in V_class_tree.R.  
+**Clustering** of volunteering causes with respect to number of applications/placements is provided in Heatmap_AP5_PL5.R.  
+Other plots of trends of placement ratio with respect to nationality are provided in V04.R.  
+
+#### Legacy scripts
+
+Legacy scripts are in the /src/legacy directory.
