@@ -20,7 +20,7 @@ summary_by_year <- opportunities %>%
   group_by(Publish.Date.Year) %>%
   summarise(Total_Volunteers_Required = sum(Number.of.Volunteers.Required))
 
-print(summary_by_year)
+View(summary_by_year)
 
 # The same summary but exclude records where # of VR < 21
 summary_by_year <- opportunities %>%
@@ -31,4 +31,4 @@ summary_by_year <- opportunities %>%
   group_by(Publish.Date.Year) %>%
   summarise(Total_Volunteers_Required = sum(Number.of.Volunteers.Required))
 
-print(summary_by_year)
+View(summary_by_year)

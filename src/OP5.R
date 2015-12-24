@@ -18,3 +18,7 @@ summary_per_year_per_english.level <- opportunities %>%
   group_by(Publish.Date.Year, Level.of.English.required.for.role) %>%
   summarise(Number_of_volunteers_required = sum(Number.of.Volunteers.Required)) %>%
   ungroup()
+  
+View(summary_per_year_per_english.level)
+
+rm(summary_per_year_per_english.level)
