@@ -73,7 +73,8 @@ final <-  by_Irish_ratio %>%  select (Registration_Date, isIrish, ratioPlaced) %
 colnames(final)[1] <- "Year" 
 
 # pander for nicer visualization on the notebook
-pander(data.frame(final), style = 'rmarkdown')
+# pander(data.frame(final), style = 'rmarkdown')
+View(data.frame(final)) # Alternative using View
 
 ggplot(final, aes(isIrish, ratioPlaced)) + geom_bar(stat="identity") + facet_grid(. ~ Year) 
 

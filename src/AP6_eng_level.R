@@ -1,4 +1,4 @@
-# AP1_eng_level.r ----------------------------------------------------------------
+# AP6_eng_level.r ----------------------------------------------------------------
 #
 # This script returns the number of Applications for 2014, by level of English required
 

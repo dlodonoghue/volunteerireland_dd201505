@@ -30,8 +30,8 @@ summary_per_year_per_bureau <- opportunities %>%
   summarise(Number_of_volunteers_required = sum(Number.of.Volunteers.Required)) %>%
   ungroup()
 
-print(summary_per_year_per_county)
-print(summary_per_year_per_bureau)
+View(summary_per_year_per_county)
+View(summary_per_year_per_bureau)
 
 rm(summary_per_year_per_county)
 rm(summary_per_year_per_bureau)
