@@ -145,7 +145,8 @@ ggplot(
         fun.data = function(x){return(c(y = min(x)-100, label = median(x)))},
         geom = "text") + 
     coord_flip() + theme_minimal() +
-    labs(y = "Time to placement", x = "Volunteer Centre (by registration)") +
+    labs(y = "#days between application and placement",
+         x = "Centre where volunteer registered") +
     theme(axis.text=element_text(size=12),
           axis.title=element_text(size=14,face="bold")) + 
     scale_y_continuous(limits = c(-150, 950))
