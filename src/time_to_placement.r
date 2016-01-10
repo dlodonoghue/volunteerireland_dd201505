@@ -39,10 +39,12 @@ library(dplyr)
 library(ggplot2)
 
 # tidy data ####
-# retain placement dates
-placement_dates <- data.frame(Place_Date = placements$Placement_Date)
+# retain placement dates & Volunteer Centre (based on Vol registration)
+placement_dates <-
+    data.frame(Place_Date = placements$Placement_Date,
+               Vol_Centre = placements$Volunteer.Registered.Centre)
 
-# create new fields for placement year
+# create new field for placement year
 placement_dates$Place_Year  <- year(placement_dates$Place_Date)
 
 # exclude placements in 2015 because we don't have a full years data
@@ -66,7 +68,8 @@ placements$Vol_Opp_ID <-
 
 # join placements and applications by the "Vol_Opp_ID" ####
 temp_data <- merge(
-    placements[ , c("Vol_Opp_ID","Placement_Date", "Placement_ID", "Volunteer_ID")],
+    placements[ , c("Vol_Opp_ID","Placement_Date", "Placement_ID",
+                    "Volunteer_ID", "Volunteer.Registered.Centre")],
     opps_applied_for[ , c("Vol_Opp_ID", "Application_ID", "Application_Date")],
     by = "Vol_Opp_ID", all.x = TRUE, all.y = FALSE)
 
@@ -122,3 +125,28 @@ ggplot(placements_w_apps[placements_w_apps$Place_Year == "2014", ],
 # median time to placement in 2014
 median(placements_w_apps[placements_w_apps$Place_Year == "2014",
                          "time_to_place"])
+
+# find median time between application & placement by Volunteer Centre
+temp_data <-
+    placements_w_apps %>% filter(Place_Year == "2014") %>%
+    group_by(Volunteer.Registered.Centre) %>%
+    summarise(Med_time_to_place = median(time_to_place)) %>% ungroup()
+View(temp_data)
+
+# boxplot of median app -> placement time by Vol Centre (for 2014 placements)
+temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2014", ]
+
+ggplot(
+    temp_data,
+    aes(reorder(Volunteer.Registered.Centre, time_to_place, median, order = TRUE),
+        time_to_place)) +
+    geom_boxplot(outlier.size = 1, colour = "steel blue") +
+    stat_summary(
+        fun.data = function(x){return(c(y = min(x)-100, label = median(x)))},
+        geom = "text") + 
+    coord_flip() + theme_minimal() +
+    labs(y = "Time to placement", x = "Volunteer Centre (by registration)") +
+    theme(axis.text=element_text(size=12),
+          axis.title=element_text(size=14,face="bold")) + 
+    scale_y_continuous(limits = c(-150, 950))
+
