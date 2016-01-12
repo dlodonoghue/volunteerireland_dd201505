@@ -136,6 +136,12 @@ View(temp_data)
 # boxplot of median app -> placement time by Vol Centre (for 2014 placements)
 temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2014", ]
 
+# remove Donegal data
+temp_data <- temp_data[temp_data$Volunteer.Registered.Centre != "Donegal", ]
+
+# national median (for placements in 2014, that have app IDs, w/ no Donegal data)
+National_median <- median(temp_data$time_to_place)
+
 ggplot(
     temp_data,
     aes(reorder(Volunteer.Registered.Centre, time_to_place, median, order = TRUE),
