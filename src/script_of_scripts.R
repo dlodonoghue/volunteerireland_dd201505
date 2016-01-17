@@ -1,6 +1,6 @@
-# this is a template of a meta-script, that collects the output of different R scripts and puts all the resulting tables in a google spreadsheet, separating output in different worksheet.
-# this code relies on the googlesheet and dplyr library, and requires access to be executed.
-# in this specific example, the code requires that a google spreadsheet with title "VI DataKind" is accessible on the Google Drive of the account running the code (a Google account is required to run...)
+# this is a template of a meta-script, that collects the output of different R scripts and puts all the resulting tables in a google spreadsheet, separating output in different worksheets.
+# this code relies on the googlesheets and dplyr library, and requires access to a google spreadsheet to be executed.
+# in this specific example, the code requires that a google spreadsheet with title "VI DataKind" is accessible on the Google Drive of the account running the code (therefore a Google account is required to run...)
 
 library(googlesheets)
 library(dplyr)
@@ -44,7 +44,7 @@ results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = vols_
 results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = c("Unique Volunteers Placed by Age Group"), anchor = "E1")
 results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = vols_placed_by_age_group, anchor = "E2")
 
-# repeat for other tables accoring to the same pattern
+# repeat for other tables according to the same pattern, i.e.
 # source("foo.r")
 # if("foo ws" %in% gs_ws_ls(results_sheet)){
 	# results_sheet <- results_sheet %>% gs_ws_delete("foo ws")
