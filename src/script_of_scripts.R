@@ -44,6 +44,33 @@ results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = vols_
 results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = c("Unique Volunteers Placed by Age Group"), anchor = "E1")
 results_sheet <- results_sheet %>% gs_edit_cells(ws = "age group", input = vols_placed_by_age_group, anchor = "E2")
 
+# adding sheet for apps / placements by gender
+source("AP2_gender.r")
+source("PL2_gender.r")
+
+if("gender" %in% gs_ws_ls(results_sheet)){
+    results_sheet <- results_sheet %>% gs_ws_delete("gender")
+}
+
+results_sheet <- results_sheet %>% gs_ws_new("gender")
+
+results_sheet <- results_sheet %>%
+    gs_edit_cells(ws = "gender",
+                  input = c("Unique Volunteers that made an application, by Gender"),
+                  anchor = "A1")
+
+results_sheet <- results_sheet %>%
+    gs_edit_cells(ws = "gender", input = vols_applied_by_gender,
+                  anchor = "A2")
+
+results_sheet <- results_sheet %>%
+    gs_edit_cells(ws = "gender", input = c("Unique Volunteers Placed by Gender"),
+                  anchor = "E1")
+
+results_sheet <- results_sheet %>%
+    gs_edit_cells(ws = "gender", input = vols_placed_by_gender,
+                  anchor = "E2")
+
 # repeat for other tables according to the same pattern, i.e.
 # source("foo.r")
 # if("foo ws" %in% gs_ws_ls(results_sheet)){
