@@ -30,7 +30,7 @@ results_sheet <- results_sheet %>% gs_edit_cells(ws = "sanity check", input = to
 source("AP1_age_group.r")
 source("PL1_age_group.r")
 
-# delete previous "sanity check" worksheet, if present
+# delete previous "age group" worksheet, if present
 if("age group" %in% gs_ws_ls(results_sheet)){
 	results_sheet <- results_sheet %>% gs_ws_delete("age group")
 }
