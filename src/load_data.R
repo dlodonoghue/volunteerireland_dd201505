@@ -2,7 +2,7 @@
 volunteers      <- read.csv("../data/df_vol.csv", na.strings="")
 opportunities    <- read.csv("../data/df_oppsaltm.csv", na.strings="")
 placements      <- read.csv("../data/df_plc.csv", na.strings="")
-org             <- read.csv("../data/df_orgs.csv", sep='\t', na.strings="")
+org             <- read.csv("../data/df_orgs.csv", na.strings="")
 opps_applied_for <- read.csv("../data/df_oppsapfr.csv", na.strings="")
 
 # rename the common columns between the data frames and some others
@@ -37,7 +37,7 @@ volunteers$Registration_Date <- as.Date(volunteers$Registration_Date, format = "
 opportunities$Created.Date <- as.Date(opportunities$Created.Date, format = "%m/%d/%y")
 opportunities$Publish.Date <- as.Date(opportunities$Publish.Date, format = "%m/%d/%y")
 opportunities$Publish.Direct.Contact. <- as.factor(opportunities$Publish.Direct.Contact.)
-opps_applied_for$Application_Date <- as.Date(opps_applied_for$Application_Date, format = "%m/%d/%Y")
+opps_applied_for$Application_Date <- as.Date(opps_applied_for$Application_Date, format = "%d/%m/%Y")
 placements$Placement_Date <- as.Date(placements$Placement_Date, format = "%d/%m/%Y")
 placements$Opportunity_Offer_Date <- as.Date(placements$Opportunity_Offer_Date, format = "%d/%m/%Y")
 
