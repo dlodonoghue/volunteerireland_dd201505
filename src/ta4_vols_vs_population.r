@@ -1,11 +1,16 @@
-# ta4_vols_vs_population.r -----------------------------------------------------------------
-#
-# This script visualizes the number of volunteers associated to a county who have applied for an opportunity in the year specified, vs the population of that county according to the census 2011.
+# ta4_vols_vs_population.r ----------------------------------------------------
+# 
+# This script visualizes the number of volunteers associated to a county who
+# have applied for an opportunity in the year specified, vs the population of
+# that county according to the census 2011.
 
-# The "dplyr", "ggplot2", and "lubridate" packages must be installed for the script to run
+# The "dplyr", "ggplot2", and "lubridate" packages must be installed for the
+# script to run
 
-# To get and integrate census data on population distribution in different counties, go to:
-#http://www.cso.ie/px/pxeirestat/Statire/SelectVarVal/Define.asp?MainTable=CD111&TabStrip=Select&PLanguage=0&FF=1 and (optionally) deselect provinces.
+#To get and integrate census data on population distribution in different 
+#counties, go to: 
+#http://www.cso.ie/px/pxeirestat/Statire/SelectVarVal/Define.asp?MainTable=CD111&TabStrip=Select&PLanguage=0&FF=1
+#and (optionally) deselect provinces.
 
 #And follow the procedure to manually get the tables.
 
