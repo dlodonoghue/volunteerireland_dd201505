@@ -47,9 +47,6 @@ placement_dates <-
 # create new field for placement year
 placement_dates$Place_Year  <- year(placement_dates$Place_Date)
 
-# exclude placements in 2015 because we don't have a full years data
-placement_dates <- placement_dates[ placement_dates$Place_Year != "2015", ]
-
 # count placements by year and plot ####
 Placements_by_year <-
     placement_dates %>% group_by(Place_Year) %>% summarise(Num_Place = n()) %>% ungroup()
@@ -77,11 +74,8 @@ temp_data <- merge(
 missing_data_indx <- is.na(temp_data$Application_ID)
 placements_w_apps <- temp_data[!missing_data_indx, ]
 
-# exclude placements in 2015 because we don't have a full years data
-placements_w_apps$Place_Year <- year(placements_w_apps$Placement_Date)
-placements_w_apps <- placements_w_apps[ placements_w_apps$Place_Year != "2015", ]
-
 # group placements with app IDs by year
+placements_w_apps$Place_Year <- year(placements_w_apps$Placement_Date)
 placements_w_apps_by_year <- placements_w_apps %>% group_by(Place_Year) %>%
     summarise(Num_Place = n()) %>% ungroup()
 
@@ -111,35 +105,40 @@ sum(neg_time_indx)*100 / length(neg_time_indx) # % of wait times that are -ve
 
 placements_w_apps <- placements_w_apps[!neg_time_indx, ]
 
+# *** REMOVE RECORDS WHERE TIME TO PLACEMENT IS GREATER THAN 1 YEAR ***
+removal_indx <- placements_w_apps$time_to_place >365
+sum(removal_indx)*100 / length(removal_indx) 
 
-# histogram of "time to placement" for placements made in 2014
+placements_w_apps <- placements_w_apps[!removal_indx, ]
+
+# histogram of "time to placement" for placements made in 2015
 placements_w_apps$time_to_place <- 
     as.numeric(placements_w_apps$time_to_place)
 
-ggplot(placements_w_apps[placements_w_apps$Place_Year == "2014", ],
+ggplot(placements_w_apps[placements_w_apps$Place_Year == "2015", ],
        aes(x = time_to_place)) +
     geom_histogram(aes(y = ..density..),
         binwidth = 7, colour = "black", fill = "white") +
     geom_density(alpha=.2, fill="#FF6666")
 
-# median time to placement in 2014
-median(placements_w_apps[placements_w_apps$Place_Year == "2014",
+# median time to placement in 2015
+median(placements_w_apps[placements_w_apps$Place_Year == "2015",
                          "time_to_place"])
 
 # find median time between application & placement by Volunteer Centre
 temp_data <-
-    placements_w_apps %>% filter(Place_Year == "2014") %>%
+    placements_w_apps %>% filter(Place_Year == "2015") %>%
     group_by(Volunteer.Registered.Centre) %>%
     summarise(Med_time_to_place = median(time_to_place)) %>% ungroup()
 View(temp_data)
 
-# boxplot of median app -> placement time by Vol Centre (for 2014 placements)
-temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2014", ]
+# boxplot of median app -> placement time by Vol Centre (for 2015 placements)
+temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2015", ]
 
 # remove Donegal data
-temp_data <- temp_data[temp_data$Volunteer.Registered.Centre != "Donegal", ]
+#temp_data <- temp_data[temp_data$Volunteer.Registered.Centre != "Donegal", ]
 
-# national median (for placements in 2014, that have app IDs, w/ no Donegal data)
+# national median (for placements in 2015, that have app IDs, w/ no Donegal data)
 National_median <- median(temp_data$time_to_place)
 
 ggplot(
@@ -148,12 +147,12 @@ ggplot(
         time_to_place)) +
     geom_boxplot(outlier.size = 1, colour = "steel blue") +
     stat_summary(
-        fun.data = function(x){return(c(y = min(x)-100, label = median(x)))},
+        fun.data = function(x){return(c(y = min(x)-35, label = median(x)))},
         geom = "text") + 
     coord_flip() + theme_minimal() +
     labs(y = "#days between application and placement",
          x = "Centre where volunteer registered") +
     theme(axis.text=element_text(size=12),
           axis.title=element_text(size=14,face="bold")) + 
-    scale_y_continuous(limits = c(-150, 950))
+    scale_y_continuous(limits = c(-50, 400))
 
