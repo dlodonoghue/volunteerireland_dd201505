@@ -57,12 +57,12 @@ ggplot(active_volunteers_and_population, label = County, aes(x = Population, y =
         scale_x_log10() + 
         scale_y_log10() + 
         ylab(paste("Volunteers who applied, in and after", threshold_year)) +
-        scale_color_discrete(name ="Volunteer centre present", labels=c("Yes", "No")) 
+        scale_color_discrete(name ="Volunteer centre present", labels=c("No", "Yes")) 
         annotation_logticks()
 
 ggplot(active_volunteers_and_population, aes(x = reorder(County, Volunteer.Rate), y = Volunteer.Rate*1000, fill = Volunteer.Centre)) + 
          geom_bar(stat="identity") +
-		 scale_fill_discrete(name ="Volunteer centre present", labels=c("Yes", "No")) + 
+		 scale_fill_discrete(name ="Volunteer centre present", labels=c("No", "Yes")) + 
 		 xlab("County") + 
 		 ylab(paste(c("Volunteers who applied, in and after ", threshold_year, "per 1000 inhabitants"), collapse = " ")) +
          coord_flip()
