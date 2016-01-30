@@ -111,43 +111,56 @@ sum(removal_indx)*100 / length(removal_indx)
 
 placements_w_apps <- placements_w_apps[!removal_indx, ]
 
-# histogram of "time to placement" for placements made in 2015
+# histogram of "time to placement" for placements made in 2014
 placements_w_apps$time_to_place <- 
     as.numeric(placements_w_apps$time_to_place)
 
-ggplot(placements_w_apps[placements_w_apps$Place_Year == "2015", ],
+ggplot(placements_w_apps[placements_w_apps$Place_Year == "2014", ],
        aes(x = time_to_place)) +
     geom_histogram(aes(y = ..density..),
         binwidth = 7, colour = "black", fill = "white") +
     geom_density(alpha=.2, fill="#FF6666")
 
-# median time to placement in 2015
-median(placements_w_apps[placements_w_apps$Place_Year == "2015",
+# median time to placement in 2014
+median(placements_w_apps[placements_w_apps$Place_Year == "2014",
                          "time_to_place"])
 
 # find median time between application & placement by Volunteer Centre
 Vol_centre_time_to_place_stats <-
-    placements_w_apps %>% filter(Place_Year == "2015") %>%
+    placements_w_apps %>% filter(Place_Year == "2014") %>%
     group_by(Volunteer.Registered.Centre) %>%
     summarise(
         Med_time_to_place = median(time_to_place),
         Num_placements = n()) %>% ungroup()
 View(Vol_centre_time_to_place_stats)
 
-# boxplot of median app -> placement time by Vol Centre (for 2015 placements)
-temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2015", ]
+# boxplot of median app -> placement time by Vol Centre (for 2014 placements)
+temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2014", ]
 
 # remove Donegal data
-#temp_data <- temp_data[temp_data$Volunteer.Registered.Centre != "Donegal", ]
+temp_data <- temp_data[temp_data$Volunteer.Registered.Centre != "Donegal", ]
 
-# national median (for placements in 2015, that have app IDs, w/ no Donegal data)
+# national median (for placements in 2014, that have app IDs, w/ no Donegal data)
 National_median <- median(temp_data$time_to_place)
+
+# Create a data frame to hold your label variables (note "x" will need to be
+# determined by trial and error, until you are happy with the label position)
+data.label <- data.frame(
+    x = 18,
+    y = National_median,
+    label = paste("National median: ", National_median, " days", sep = "")
+)
 
 ggplot(
     temp_data,
     aes(reorder(Volunteer.Registered.Centre, time_to_place, median, order = TRUE),
         time_to_place)) +
     geom_boxplot(outlier.size = 0, colour = "steel blue") +
+    geom_hline(yintercept = National_median, colour = "red", alpha = 0.7) +
+    geom_text(data = data.label, aes(x = x , y = y , label = label ), size=4,
+              colour = "red", angle = 90, vjust = -0.4, hjust = 0, alpha = 0.7) +
+#    geom_text(mapping=aes(x = 23, y=National_median, label="National", colour = "red"),
+#              size=4, angle=90, vjust=-0.4, hjust=0) +
     stat_summary(
         fun.data = function(x){return(c(y = min(0)-25, label = length(x)))},
         geom = "text") + 
@@ -157,6 +170,6 @@ ggplot(
     coord_flip() + theme_minimal() +
     labs(y = "#days between application and placement",
          x = "Centre where volunteer registered") +
-    theme(axis.text=element_text(size=10),
-          axis.title=element_text(size=14,face="bold")) + 
+    theme(axis.text=element_text(size=12),
+          axis.title=element_text(size=14,face="bold")) +
     scale_y_continuous(limits = c(-25, 400))
