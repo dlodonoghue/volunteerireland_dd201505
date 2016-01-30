@@ -23,17 +23,17 @@ applications_opps_and_orgs <- merge(x = opps_applied_for, y = opps_and_orgs,
 placements_opps_and_orgs <- merge(x = placements, y = opps_and_orgs,
                                   by = "Opportunity_ID", all.x = TRUE)
 
-# total number of unique vols applying, by Cause in 2014 ----------
+# total number of unique vols applying, by Cause in 2015 ----------
 vols_applied_by_cause <- applications_opps_and_orgs %>%
-    filter(Application_Date_Year == "2014") %>%
+    filter(Application_Date_Year == "2015") %>%
     group_by(Cause) %>%
     summarise(Num_apps = n_distinct(Application_ID),
               Num_vols_applied = n_distinct(Volunteer_ID)) %>%
     ungroup() 
 
-# total number of unique vols placed, by Cause in 2014 ------------
+# total number of unique vols placed, by Cause in 2015 ------------
 vols_placed_by_cause <- placements_opps_and_orgs %>%
-    filter(Placement_Date_Year == "2014") %>%
+    filter(Placement_Date_Year == "2015") %>%
     group_by(Cause) %>%
     summarise(Num_placements = n_distinct(Placement_ID),
               Num_vols_placed = n_distinct(Volunteer_ID)) %>%
@@ -41,13 +41,20 @@ vols_placed_by_cause <- placements_opps_and_orgs %>%
 
 # combine application & placement counts, then compute placement rate -----
 placements_by_cause <- 
-    merge(vols_applied_by_cause, vols_placed_by_cause, by = "Cause")
+    merge(vols_applied_by_cause, vols_placed_by_cause, by = "Cause",
+          all.x = TRUE)
+
+na_indx <- is.na(placements_by_cause$Num_placements)
+placements_by_cause[na_indx, "Num_placements"] <- 0
+
+na_indx <- is.na(placements_by_cause$Num_vols_placed)
+placements_by_cause[na_indx, "Num_vols_placed"] <- 0
 
 placements_by_cause <-
     mutate(placements_by_cause,
            vol_placement_rate = 
-               vols_placed_by_cause$Num_vols_placed/
-               vols_applied_by_cause$Num_vols_applied)
+               placements_by_cause$Num_vols_placed/
+               placements_by_cause$Num_vols_applied)
 
 # arrange causes in descending order of placement rate
 placements_by_cause <- 

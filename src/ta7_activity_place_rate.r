@@ -22,17 +22,17 @@ applications_and_opps <- merge(x = opps_applied_for, y = opps_activity,
 placements_and_opps <- merge(x = placements, y = opps_activity,
                              by = "Opportunity_ID", all.x = TRUE)
 
-# total number of unique vols applying, by Activity in 2014 ----------
+# total number of unique vols applying, by Activity in 2015 ----------
 vols_applied_by_activity <- applications_and_opps %>%
-    filter(Application_Date_Year == "2014") %>%
+    filter(Application_Date_Year == "2015") %>%
     group_by(Activity) %>%
     summarise(Num_apps = n_distinct(Application_ID),
               Num_vols_applied = n_distinct(Volunteer_ID)) %>%
     ungroup() 
 
-# total number of unique vols placed, by Activity in 2014 ------------
+# total number of unique vols placed, by Activity in 2015 ------------
 vols_placed_by_activity <- placements_and_opps %>%
-    filter(Placement_Date_Year == "2014") %>%
+    filter(Placement_Date_Year == "2015") %>%
     group_by(Activity) %>%
     summarise(Num_placements = n_distinct(Placement_ID),
               Num_vols_placed = n_distinct(Volunteer_ID)) %>%
@@ -40,13 +40,20 @@ vols_placed_by_activity <- placements_and_opps %>%
 
 # combine application & placement counts, then compute placement rate -----
 placements_by_activity <- 
-    merge(vols_applied_by_activity, vols_placed_by_activity, by = "Activity")
+    merge(vols_applied_by_activity, vols_placed_by_activity, by = "Activity",
+          all.x = TRUE)
+
+na_indx <- is.na(placements_by_activity$Num_placements)
+placements_by_activity[na_indx, "Num_placements"] <- 0
+
+na_indx <- is.na(placements_by_activity$Num_vols_placed)
+placements_by_activity[na_indx, "Num_vols_placed"] <- 0
 
 placements_by_activity <-
     mutate(placements_by_activity,
            vol_placement_rate = 
-               vols_placed_by_activity$Num_vols_placed/
-               vols_applied_by_activity$Num_vols_applied)
+               placements_by_activity$Num_vols_placed/
+               placements_by_activity$Num_vols_applied)
 
 # arrange Activities in descending order of placement rate
 placements_by_activity <- 
