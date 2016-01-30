@@ -126,11 +126,13 @@ median(placements_w_apps[placements_w_apps$Place_Year == "2015",
                          "time_to_place"])
 
 # find median time between application & placement by Volunteer Centre
-temp_data <-
+Vol_centre_time_to_place_stats <-
     placements_w_apps %>% filter(Place_Year == "2015") %>%
     group_by(Volunteer.Registered.Centre) %>%
-    summarise(Med_time_to_place = median(time_to_place)) %>% ungroup()
-View(temp_data)
+    summarise(
+        Med_time_to_place = median(time_to_place),
+        Num_placements = n()) %>% ungroup()
+View(Vol_centre_time_to_place_stats)
 
 # boxplot of median app -> placement time by Vol Centre (for 2015 placements)
 temp_data <- placements_w_apps[placements_w_apps$Place_Year == "2015", ]
@@ -145,14 +147,16 @@ ggplot(
     temp_data,
     aes(reorder(Volunteer.Registered.Centre, time_to_place, median, order = TRUE),
         time_to_place)) +
-    geom_boxplot(outlier.size = 1, colour = "steel blue") +
+    geom_boxplot(outlier.size = 0, colour = "steel blue") +
     stat_summary(
-        fun.data = function(x){return(c(y = min(x)-35, label = median(x)))},
+        fun.data = function(x){return(c(y = min(0)-25, label = length(x)))},
+        geom = "text") + 
+    stat_summary(
+        fun.data = function(x){return(c(y = median(x)+10, label = median(x)))},
         geom = "text") + 
     coord_flip() + theme_minimal() +
     labs(y = "#days between application and placement",
          x = "Centre where volunteer registered") +
-    theme(axis.text=element_text(size=12),
+    theme(axis.text=element_text(size=10),
           axis.title=element_text(size=14,face="bold")) + 
-    scale_y_continuous(limits = c(-50, 400))
-
+    scale_y_continuous(limits = c(-25, 400))
