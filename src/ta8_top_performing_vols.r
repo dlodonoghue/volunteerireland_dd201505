@@ -20,7 +20,7 @@ library(dplyr)
 threshold_year = 2015
 
 # order volunteers by time contributed according to placements they have been involved into (and add a cumulative sum of the time contributed by the first N of them)
-ranking_volunteers <- placements %>% filter(year(Opportunity_Offer_Date) >= threshold_year) %>%group_by(Volunteer_ID) %>% summarise(Volunteer.Hours = sum(Volunteer.Hours)) %>% arrange(desc(Volunteer.Hours)) %>% mutate(Sum.Volunteer.Hours = cumsum(Volunteer.Hours))
+ranking_volunteers <- placements %>% filter(year(Placement_Date) >= threshold_year) %>%group_by(Volunteer_ID) %>% summarise(Volunteer.Hours = sum(Volunteer.Hours)) %>% arrange(desc(Volunteer.Hours)) %>% mutate(Sum.Volunteer.Hours = cumsum(Volunteer.Hours))
 
 ggplot(data = ranking_volunteers, aes(x = as.numeric(rownames(ranking_volunteers))/nrow(ranking_volunteers)*100, y = Sum.Volunteer.Hours/sum(Volunteer.Hours)*100)) + 
               geom_line()	+
