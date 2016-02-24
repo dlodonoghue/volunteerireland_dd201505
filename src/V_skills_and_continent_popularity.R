@@ -1,4 +1,4 @@
-# this code computes popular skills and continent of origin
+# this code computes likelihood of being placed bucketing volunteers by their skills and continent of origin
 
 if (!("opportunities" %in% ls()) |
       !("opps_applied_for" %in% ls()) |
